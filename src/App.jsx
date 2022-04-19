@@ -26,13 +26,34 @@ export default function App() {
     });
   };
 
+  const createItem = (event) => {
+    event.preventDefault();
+    axios.post('/items', {
+      name: event.target.name.value,
+      description: event.target.description.value,
+      price: event.target.price.value,
+    });
+    // .then((result) => {
+    //   console.log(result);
+    // });
+  };
+
   const selectedItem = items[selectedItemIndex];
 
   return (
     <div className="container">
       <div className="row">
         <h1 className="page-title">Wow Shopping!</h1>
-        <Items items={items} setItemDetail={setItemDetail} />
+        <div className="col-6">
+          <form onSubmit={createItem}>
+            <input type="text" name="name" placeholder="Name" />
+            <input type="text" name="description" placeholder="Description" />
+            <input type="text" name="price" placeholder="Price" />
+            <button type="submit">Create Item</button>
+          </form>
+
+        </div>
+        <div className="col-6"><Items items={items} setItemDetail={setItemDetail} /></div>
         {items.length === 0 && (
           <button type="button" onClick={getItems}>
             Get Items
