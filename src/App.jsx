@@ -4,6 +4,7 @@ import axios from 'axios';
 import Cart from './components/Cart.jsx';
 import Items from './components/Items.jsx';
 import ItemDetail from './components/ItemDetail.jsx';
+import CreateItemForm from './components/CreateItemForm.jsx';
 
 export default function App() {
   const [items, setItems] = useState([]);
@@ -32,10 +33,11 @@ export default function App() {
       name: event.target.name.value,
       description: event.target.description.value,
       price: event.target.price.value,
-    });
-    // .then((result) => {
-    //   console.log(result);
-    // });
+    })
+      .then((result) => {
+        console.log(result);
+        getItems();
+      });
   };
 
   const selectedItem = items[selectedItemIndex];
@@ -44,15 +46,9 @@ export default function App() {
     <div className="container">
       <div className="row">
         <h1 className="page-title">Wow Shopping!</h1>
-        <div className="col-6">
-          <form onSubmit={createItem}>
-            <input type="text" name="name" placeholder="Name" />
-            <input type="text" name="description" placeholder="Description" />
-            <input type="text" name="price" placeholder="Price" />
-            <button type="submit">Create Item</button>
-          </form>
 
-        </div>
+        <CreateItemForm createItem={createItem} />
+
         <div className="col-6"><Items items={items} setItemDetail={setItemDetail} /></div>
         {items.length === 0 && (
           <button type="button" onClick={getItems}>
